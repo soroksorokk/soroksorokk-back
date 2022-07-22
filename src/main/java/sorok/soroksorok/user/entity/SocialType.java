@@ -1,4 +1,4 @@
-package sorok.soroksorok.auth.entity;
+package sorok.soroksorok.user.entity;
 
 public enum SocialType {
   KAKAO, GOOGLE, NAVER

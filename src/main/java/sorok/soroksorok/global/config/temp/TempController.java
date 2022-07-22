@@ -1,4 +1,4 @@
-package sorok.soroksorok.temp;
+package sorok.soroksorok.global.config.temp;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
