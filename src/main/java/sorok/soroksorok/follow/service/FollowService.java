@@ -1,7 +1,7 @@
 package sorok.soroksorok.follow.service;
 
 import java.util.List;
-import sorok.soroksorok.follow.entity.UserRes;
+import sorok.soroksorok.follow.dto.UserRes;
 import sorok.soroksorok.user.entity.User;
 
 public interface FollowService {
@@ -13,4 +13,8 @@ public interface FollowService {
   List<UserRes> selectMyFollowingUsers(User user);
 
   List<UserRes> selectMyFollowerUsers(User user);
+
+  Long countMyFollowingCount(User user);
+
+  Long countMyFollowerCount(User user);
 }

@@ -7,6 +7,10 @@ import sorok.soroksorok.user.entity.User;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
+  long countByFollowee(User followee);
+
+  long countByFollower(User follower);
+
   List<Follow> findByFollower(User follower);
 
   List<Follow> findByFollowee(User followee);

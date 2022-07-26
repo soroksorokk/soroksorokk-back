@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import sorok.soroksorok.follow.entity.UserRes;
+import sorok.soroksorok.follow.dto.UserRes;
 import sorok.soroksorok.follow.service.FollowService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 

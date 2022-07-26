@@ -7,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sorok.soroksorok.follow.entity.Follow;
-import sorok.soroksorok.follow.entity.UserRes;
+import sorok.soroksorok.follow.dto.UserRes;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.follow.repository.FollowRepository;
+import sorok.soroksorok.user.repository.UserRepository;
 import sorok.soroksorok.user.service.UserService;
 
 @Slf4j
@@ -18,12 +19,13 @@ import sorok.soroksorok.user.service.UserService;
 public class FollowServiceImpl implements FollowService {
 
   private final FollowRepository followRepository;
-  private final UserService userService;
+  //  private final UserService userService;
+  private final UserRepository userRepository;
 
   @Override
   @Transactional
   public void followUser(User follower, String nickname) {
-    User followee = userService.getUserEntityByNickname(nickname);
+    User followee = userRepository.findByNickname(nickname).orElseThrow(() -> new RuntimeException());
 
     Follow followEntity = Follow
         .builder()
@@ -37,7 +39,7 @@ public class FollowServiceImpl implements FollowService {
   @Override
   @Transactional
   public void unfollowUser(User follower, String nickname) {
-    User followee = userService.getUserEntityByNickname(nickname);
+    User followee = userRepository.findByNickname(nickname).orElseThrow(() -> new RuntimeException());
     long cnt = followRepository.deleteByFolloweeAndFollower(followee, follower);
 
     if (cnt == 0) {
@@ -65,5 +67,17 @@ public class FollowServiceImpl implements FollowService {
         .map(Follow::getFollower)
         .map(UserRes::makeDto)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Long countMyFollowingCount(User user) {
+    return followRepository.countByFollower(user);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Long countMyFollowerCount(User user) {
+    return followRepository.countByFollowee(user);
   }
 }
