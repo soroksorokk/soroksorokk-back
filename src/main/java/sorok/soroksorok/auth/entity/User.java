@@ -1,4 +1,4 @@
-package sorok.soroksorok.user.entity;
+package sorok.soroksorok.auth.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,15 +46,9 @@ public class User {
 
   private String refreshToken; // 리프레시 토큰
 
-  // 유저 권한 설정 메소드
-  public void authorizeUser() {
-    this.role = Role.USER;
-  }
+  private Boolean agreeOption1;
 
-  // 비밀번호 암호화 메소드
-  public void passwordEncode(PasswordEncoder passwordEncoder) {
-    this.password = passwordEncoder.encode(this.password);
-  }
+  private Boolean agreeOption2;
 
   public void updateRefreshToken(String updateRefreshToken) {
     this.refreshToken = updateRefreshToken;

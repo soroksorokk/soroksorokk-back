@@ -1,9 +1,9 @@
-package sorok.soroksorok.user.repository;
+package sorok.soroksorok.auth.repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import sorok.soroksorok.user.entity.SocialType;
-import sorok.soroksorok.user.entity.User;
+import sorok.soroksorok.auth.entity.SocialType;
+import sorok.soroksorok.auth.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

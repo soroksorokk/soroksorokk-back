@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import sorok.soroksorok.user.entity.User;
-import sorok.soroksorok.user.repository.UserRepository;
+import sorok.soroksorok.auth.entity.User;
+import sorok.soroksorok.auth.repository.UserRepository;
 
 /**
  * Jwt 인증 필터

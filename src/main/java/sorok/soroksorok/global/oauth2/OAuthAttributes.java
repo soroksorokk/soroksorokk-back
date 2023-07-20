@@ -9,9 +9,9 @@ import sorok.soroksorok.global.oauth2.userInfo.GoogleOAuth2UserInfo;
 import sorok.soroksorok.global.oauth2.userInfo.KakaoOAuth2UserInfo;
 import sorok.soroksorok.global.oauth2.userInfo.NaverOAuth2UserInfo;
 import sorok.soroksorok.global.oauth2.userInfo.OAuth2UserInfo;
-import sorok.soroksorok.user.entity.Role;
-import sorok.soroksorok.user.entity.SocialType;
-import sorok.soroksorok.user.entity.User;
+import sorok.soroksorok.auth.entity.Role;
+import sorok.soroksorok.auth.entity.SocialType;
+import sorok.soroksorok.auth.entity.User;
 
 /**
  * 각 소셜에서 받아오는 데이터가 다르므로

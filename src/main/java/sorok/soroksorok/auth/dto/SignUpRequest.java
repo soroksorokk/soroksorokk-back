@@ -1,4 +1,4 @@
-package sorok.soroksorok.user.dto;
+package sorok.soroksorok.auth.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,5 +11,7 @@ public class SignUpRequest {
   private String email;
   private String password;
   private String nickname;
+  private Boolean option1;
+  private Boolean option2;
 
 }

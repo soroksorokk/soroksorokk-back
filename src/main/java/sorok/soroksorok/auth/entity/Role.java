@@ -1,4 +1,4 @@
-package sorok.soroksorok.user.entity;
+package sorok.soroksorok.auth.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

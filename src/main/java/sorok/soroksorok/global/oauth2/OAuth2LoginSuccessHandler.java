@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import sorok.soroksorok.global.jwt.JwtService;
-import sorok.soroksorok.user.entity.Role;
+import sorok.soroksorok.auth.entity.Role;
 
 @Slf4j
 @Component
