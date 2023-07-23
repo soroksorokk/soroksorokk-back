@@ -22,15 +22,10 @@ public class AuthController {
   @PostMapping("/sign-up")
   @ResponseStatus(HttpStatus.CREATED)
   public void signUp(
-      @RequestPart SignUpRequest signUpRequest,
-      @RequestPart MultipartFile image
+      @RequestPart(required = false) MultipartFile image,
+      @RequestPart SignUpRequest signUpRequest
   ) throws Exception {
     authService.signUp(signUpRequest, image);
-  }
-
-  @GetMapping("/jwt-test")
-  public String jwtTest() {
-    return "jwtTest 요청 성공";
   }
 
 }
