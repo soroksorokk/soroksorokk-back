@@ -11,9 +11,9 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import sorok.soroksorok.auth.entity.SocialType;
-import sorok.soroksorok.auth.entity.User;
-import sorok.soroksorok.auth.repository.UserRepository;
+import sorok.soroksorok.user.entity.SocialType;
+import sorok.soroksorok.user.entity.User;
+import sorok.soroksorok.user.repository.UserRepository;
 
 @Slf4j
 @Service

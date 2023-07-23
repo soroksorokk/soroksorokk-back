@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import sorok.soroksorok.global.jwt.JwtService;
-import sorok.soroksorok.auth.repository.UserRepository;
+import sorok.soroksorok.user.repository.UserRepository;
 
 
 @Slf4j

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
-import sorok.soroksorok.auth.repository.UserRepository;
+import sorok.soroksorok.user.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

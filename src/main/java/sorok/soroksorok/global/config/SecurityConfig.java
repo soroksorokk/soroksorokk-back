@@ -11,8 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import sorok.soroksorok.global.jwt.JwtAuthenticationProcessingFilter;
@@ -24,7 +23,7 @@ import sorok.soroksorok.global.login.LoginSuccessHandler;
 import sorok.soroksorok.global.oauth2.CustomOAuth2UserService;
 import sorok.soroksorok.global.oauth2.OAuth2LoginFailureHandler;
 import sorok.soroksorok.global.oauth2.OAuth2LoginSuccessHandler;
-import sorok.soroksorok.auth.repository.UserRepository;
+import sorok.soroksorok.user.repository.UserRepository;
 
 /**
  * 인증은 CustomJsonUsernamePasswordAuthenticationFilter에서 authenticate()로 인증된 사용자로 처리
@@ -64,8 +63,8 @@ public class SecurityConfig {
         // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
         .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**").permitAll()
         .antMatchers(HttpMethod.POST, "/api/auth/sign-up").permitAll() // 회원가입 접근 가능
+        .antMatchers(HttpMethod.POST, "/api/auth/sign-in").permitAll() // 회원가입 접근 가능
         .antMatchers("/temp").permitAll() // 회원가입 접근 가능
-        .antMatchers("/jwt-test").permitAll() // 회원가입 접근 가능
         .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
         .and()
         //== 소셜 로그인 설정 ==//
@@ -84,8 +83,8 @@ public class SecurityConfig {
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 
   /**

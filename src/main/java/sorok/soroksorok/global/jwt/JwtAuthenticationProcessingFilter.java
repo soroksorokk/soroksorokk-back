@@ -11,16 +11,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import sorok.soroksorok.auth.entity.User;
-import sorok.soroksorok.auth.repository.UserRepository;
+import sorok.soroksorok.user.entity.User;
+import sorok.soroksorok.user.repository.UserRepository;
+import sorok.soroksorok.global.login.UserDetailsImpl;
 
 /**
  * Jwt 인증 필터
- * "/login" 이외의 URI 요청이 왔을 때 처리하는 필터
+ * "/api/auth/sign-in" 이외의 URI 요청이 왔을 때 처리하는 필터
  *
  * 기본적으로 사용자는 요청 헤더에 AccessToken만 담아서 요청
  * AccessToken 만료 시에만 RefreshToken을 요청 헤더에 AccessToken과 함께 요청
@@ -35,7 +35,7 @@ import sorok.soroksorok.auth.repository.UserRepository;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-  private static final String NO_CHECK_URL = "/login"; // "/login"으로 들어오는 요청은 Filter 작동 X
+  private static final String NO_CHECK_URL = "/api/auth/sign-in"; // "/api/auth/sign-in"으로 들어오는 요청은 Filter 작동 X
 
   private final JwtService jwtService;
   private final UserRepository userRepository;
@@ -142,11 +142,13 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
       password = PasswordUtil.generateRandomPassword();
     }
 
-    UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
-        .username(myUser.getEmail())
-        .password(password)
-        .roles(myUser.getRole().name())
-        .build();
+//    UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
+//        .username(myUser.getEmail())
+//        .password(password)
+//        .roles(myUser.getRole().name())
+//        .build();
+
+    UserDetailsImpl userDetailsUser = new UserDetailsImpl(myUser);
 
     Authentication authentication =
         new UsernamePasswordAuthenticationToken(userDetailsUser, null,
