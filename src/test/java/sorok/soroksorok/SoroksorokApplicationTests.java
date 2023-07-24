@@ -2,12 +2,14 @@ package sorok.soroksorok;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-//@SpringBootTest
-//class SoroksorokApplicationTests {
-//
-//  @Test
-//  void contextLoads() {
-//  }
-//
-//}
+@SpringBootTest
+@EnableJpaAuditing
+class SoroksorokApplicationTests {
+
+  @Test
+  void contextLoads() {
+  }
+
+}
