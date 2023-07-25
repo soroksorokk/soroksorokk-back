@@ -31,15 +31,18 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     String accessToken = jwtService.createAccessToken(email); // JwtService의 createAccessToken을 사용하여 AccessToken 발급
     String refreshToken = jwtService.createRefreshToken(); // JwtService의 createRefreshToken을 사용하여 RefreshToken 발급
 
-    Optional<User> optionalUser = userRepository.findByEmail(email);
+    User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException());
 
-    jwtService.sendAccessAndRefreshToken(response, optionalUser.get()); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
+    jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken, user); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
 
-    optionalUser
-        .ifPresent(user -> {
-          user.updateRefreshToken(refreshToken);
-          userRepository.saveAndFlush(user);
-        });
+    user.updateRefreshToken(refreshToken);
+    userRepository.saveAndFlush(user);
+
+//    optionalUser
+//        .ifPresent(user -> {
+//          user.updateRefreshToken(refreshToken);
+//          userRepository.saveAndFlush(user);
+//        });
 
     log.info("로그인에 성공하였습니다. 이메일 : {}", email);
     log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);
