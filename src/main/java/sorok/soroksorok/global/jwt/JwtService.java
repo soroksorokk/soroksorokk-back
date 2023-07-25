@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
+import sorok.soroksorok.follow.entity.UserRes;
+import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.user.repository.UserRepository;
 
 @Service
@@ -171,5 +173,9 @@ public class JwtService {
       log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
       return false;
     }
+  }
+
+  public void sendAccessAndRefreshToken(HttpServletResponse response, User user) {
+    response.setHeader("User", user.getNickname());
   }
 }
