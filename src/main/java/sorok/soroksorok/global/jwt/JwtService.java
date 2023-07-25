@@ -86,6 +86,14 @@ public class JwtService {
     log.info("재발급된 Access Token : {}", accessToken);
   }
 
+  public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+    response.setStatus(HttpServletResponse.SC_OK);
+
+    setAccessTokenHeader(response, accessToken);
+    setRefreshTokenHeader(response, refreshToken);
+    log.info("Access Token, Refresh Token 헤더 설정 완료");
+  }
+
   /**
    * AccessToken + RefreshToken 헤더에 실어서 보내기
    */
