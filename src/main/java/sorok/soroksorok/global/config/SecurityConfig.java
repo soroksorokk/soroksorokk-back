@@ -45,6 +45,10 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
+        .cors()
+
+        .and()
+
         .formLogin().disable() // FormLogin 사용 X
         .httpBasic().disable() // httpBasic 사용 X
         .csrf().disable() // csrf 보안 사용 X
