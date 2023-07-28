@@ -1,15 +1,11 @@
 package sorok.soroksorok.global.config;
 
 import com.fasterxml.classmate.TypeResolver;
-import com.nimbusds.oauth2.sdk.ErrorResponse;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -28,7 +24,7 @@ public class SwaggerConfig {
   public Docket api(TypeResolver typeResolver) {
     return new Docket(DocumentationType.OAS_30)
         .securityContexts(Collections.singletonList(securityContext())) // 추가
-        .securitySchemes(List.of(apiKey())) // 추가
+        .securitySchemes(List.of(apiKey(), apiKey2())) // 추가
         .useDefaultResponseMessages(false)
         .select()
         .apis(RequestHandlerSelectors.basePackage("sorok.soroksorok"))
@@ -49,7 +45,7 @@ public class SwaggerConfig {
     AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
     AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
     authorizationScopes[0] = authorizationScope;
-    return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+    return Arrays.asList(new SecurityReference("Authorization", authorizationScopes), new SecurityReference("Authorization-refresh", authorizationScopes));
   }
 
   // 추가
@@ -57,10 +53,15 @@ public class SwaggerConfig {
     return new ApiKey("Authorization", "Authorization", "header");
   }
 
+  // 추가
+  private ApiKey apiKey2() {
+    return new ApiKey("Authorization-refresh", "Authorization-refresh", "header");
+  }
+
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-        .title("Backend API")
-        .description("Backend API 문서")
+        .title("소록소록 - Backend API")
+        .description("소록소록 - Backend API 문서")
         .version("1.0")
         .build();
   }
