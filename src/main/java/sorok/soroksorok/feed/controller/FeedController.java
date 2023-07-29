@@ -1,5 +1,9 @@
 package sorok.soroksorok.feed.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +29,9 @@ import sorok.soroksorok.feed.dto.FeedRes;
 import sorok.soroksorok.feed.dto.FeedSearchCond;
 import sorok.soroksorok.feed.service.FeedService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
+import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = "Feed API - 피드 기능 API")
 @Slf4j
 @RestController
 @RequestMapping("/api/feeds")
@@ -34,18 +40,25 @@ public class FeedController {
 
   private final FeedService feedService;
 
-  @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+  @ApiOperation(
+      value = "게시글 작성")
+  @ApiResponses({
+      @ApiResponse(responseCode = "201", description = "게시글 작성 성공") })
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
   public void createFeed(
       @RequestPart(required = false) MultipartFile image,
       @RequestPart FeedReq req,
-      @AuthenticationPrincipal UserDetailsImpl userDetails
+      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) throws IOException {
     feedService.createFeed(image, req, userDetails.getUser());
   }
 
-  //
+  @ApiOperation(
+      value = "게시글 상세 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 상세 조회 성공") })
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public FeedRes selectFeed(
@@ -54,6 +67,10 @@ public class FeedController {
     return feedService.selectFeed(id);
   }
 
+  @ApiOperation(
+      value = "게시글 페이징 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 페이징 조회 성공") })
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public void selectFeeds(
@@ -62,22 +79,30 @@ public class FeedController {
 
   }
 
+  @ApiOperation(
+      value = "게시글 수정")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 수정 성공") })
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public void editFeed(
       @PathVariable Long id,
       @RequestPart(required = false) MultipartFile image,
       @RequestPart FeedEditReq req,
-      @AuthenticationPrincipal UserDetailsImpl userDetails
+      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
 
   }
 
+  @ApiOperation(
+      value = "게시글 삭제")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 삭제 성공") })
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   public void deleteFeed(
       @PathVariable Long id,
-      @AuthenticationPrincipal UserDetailsImpl userDetails
+      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
 
   }
