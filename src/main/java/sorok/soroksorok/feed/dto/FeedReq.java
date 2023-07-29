@@ -9,7 +9,7 @@ import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.entity.Mood;
 
-@ApiModel(value = "게시글 작성 요청")
+@ApiModel(value = "피드 작성 요청")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FeedReq {

@@ -2,7 +2,6 @@ package sorok.soroksorok.follow.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import sorok.soroksorok.follow.dto.UserRes;
+import sorok.soroksorok.follow.dto.FollowRes;
 import sorok.soroksorok.follow.service.FollowService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 import springfox.documentation.annotations.ApiIgnore;
@@ -62,7 +61,7 @@ public class FollowController {
       @ApiResponse(responseCode = "200", description = "팔로우 목록 조회 성공") })
   @GetMapping("/followings")
   @ResponseStatus(HttpStatus.OK)
-  public List<UserRes> selectMyFollowingUsers(
+  public List<FollowRes> selectMyFollowingUsers(
       @RequestParam String nickname,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
@@ -75,7 +74,7 @@ public class FollowController {
       @ApiResponse(responseCode = "201", description = "팔로워 목록 조회 성공") })
   @GetMapping("/followers")
   @ResponseStatus(HttpStatus.OK)
-  public List<UserRes> selectMyFollowerUsers(
+  public List<FollowRes> selectMyFollowerUsers(
       @RequestParam String nickname,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {

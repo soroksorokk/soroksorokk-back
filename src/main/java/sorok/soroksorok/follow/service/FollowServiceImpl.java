@@ -7,11 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sorok.soroksorok.follow.entity.Follow;
-import sorok.soroksorok.follow.dto.UserRes;
+import sorok.soroksorok.follow.dto.FollowRes;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.follow.repository.FollowRepository;
 import sorok.soroksorok.user.repository.UserRepository;
-import sorok.soroksorok.user.service.UserService;
 
 @Slf4j
 @Service
@@ -49,23 +48,23 @@ public class FollowServiceImpl implements FollowService {
 
   @Override
   @Transactional
-  public List<UserRes> selectMyFollowingUsers(User user) {
+  public List<FollowRes> selectMyFollowingUsers(User user) {
     List<Follow> followingEntities = followRepository.findByFollower(user);
     return followingEntities
         .stream()
         .map(Follow::getFollowee)
-        .map(UserRes::makeDto)
+        .map(FollowRes::makeDto)
         .collect(Collectors.toList());
   }
 
   @Override
   @Transactional
-  public List<UserRes> selectMyFollowerUsers(User user) {
+  public List<FollowRes> selectMyFollowerUsers(User user) {
     List<Follow> followerEntities = followRepository.findByFollowee(user);
     return followerEntities
         .stream()
         .map(Follow::getFollower)
-        .map(UserRes::makeDto)
+        .map(FollowRes::makeDto)
         .collect(Collectors.toList());
   }
 

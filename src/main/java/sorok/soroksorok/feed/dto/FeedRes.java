@@ -1,12 +1,14 @@
 package sorok.soroksorok.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.entity.Mood;
 
+@ApiModel(value = "피드 조회 응답")
 @Getter
 @Builder
 public class FeedRes {

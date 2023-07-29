@@ -1,9 +1,11 @@
 package sorok.soroksorok.user.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Getter;
 import sorok.soroksorok.user.entity.User;
 
+@ApiModel(value = "유저 프로필 조회 응답")
 @Getter
 @Builder
 public class UserProfileRes {
