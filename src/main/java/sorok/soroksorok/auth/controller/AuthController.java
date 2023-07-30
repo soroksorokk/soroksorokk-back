@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -50,6 +51,30 @@ public class AuthController {
       @ApiResponse(responseCode = "200", description = "토큰 재발급 성공") })
   @PostMapping("/re-issue")
   public void reIssue() {
+  }
+
+  @ApiOperation(
+      value = "구글 소셜 로그인")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "토큰 재발급 성공") })
+  @GetMapping("/oauth2/authorization/google")
+  public void googleLogin() {
+  }
+
+  @ApiOperation(
+      value = "네이버 소셜 로그인")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "토큰 재발급 성공") })
+  @PostMapping("/oauth2/authorization/naver")
+  public void naverLogin() {
+  }
+
+  @ApiOperation(
+      value = "카카오 소셜 로그인")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "토큰 재발급 성공") })
+  @PostMapping("/oauth2/authorization/kakao")
+  public void kakaoLogin() {
   }
 
 }
