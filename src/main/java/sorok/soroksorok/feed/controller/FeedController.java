@@ -70,7 +70,7 @@ public class FeedController {
   @ApiOperation(
       value = "게시글 페이징 조회")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "게시글 페이징 조회 성공") })
+      @ApiResponse(responseCode = "200", description = "게시글 페이징 조회 성공")})
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public void selectFeeds(
