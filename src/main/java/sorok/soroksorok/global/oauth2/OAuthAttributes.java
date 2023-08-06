@@ -5,10 +5,12 @@ import lombok.Getter;
 
 import java.util.Map;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import sorok.soroksorok.global.oauth2.userInfo.GoogleOAuth2UserInfo;
 import sorok.soroksorok.global.oauth2.userInfo.KakaoOAuth2UserInfo;
 import sorok.soroksorok.global.oauth2.userInfo.NaverOAuth2UserInfo;
 import sorok.soroksorok.global.oauth2.userInfo.OAuth2UserInfo;
+import sorok.soroksorok.global.util.NicknamingUtils;
 import sorok.soroksorok.user.entity.Role;
 import sorok.soroksorok.user.entity.SocialType;
 import sorok.soroksorok.user.entity.User;
@@ -18,13 +20,17 @@ import sorok.soroksorok.user.entity.User;
  * 소셜별로 데이터를 받는 데이터를 분기 처리하는 DTO 클래스
  */
 @Getter
+@RequiredArgsConstructor
 public class OAuthAttributes {
+
 
   private String nameAttributeKey; // OAuth2 로그인 진행 시 키가 되는 필드 값, PK와 같은 의미
   private OAuth2UserInfo oauth2UserInfo; // 소셜 타입별 로그인 유저 정보(닉네임, 이메일, 프로필 사진 등등)
+  private final NicknamingUtils nicknamingUtils;
 
   @Builder
-  public OAuthAttributes(String nameAttributeKey, OAuth2UserInfo oauth2UserInfo) {
+  public OAuthAttributes(String nameAttributeKey, OAuth2UserInfo oauth2UserInfo, NicknamingUtils nicknamingUtils) {
+    this.nicknamingUtils = nicknamingUtils;
     this.nameAttributeKey = nameAttributeKey;
     this.oauth2UserInfo = oauth2UserInfo;
   }
