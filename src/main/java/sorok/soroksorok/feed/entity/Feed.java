@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sorok.soroksorok.feed.dto.FeedEditReq;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.global.entity.BaseEntity;
 
@@ -50,5 +51,15 @@ public class Feed extends BaseEntity {
     this.music = music;
     this.user = user;
     this.mood = mood;
+  }
+
+  public void editFeed(FeedEditReq req, String imageUrl) {
+    this.title = req.getTitle();
+    this.content = req.getContent();
+    this.imageUrl = imageUrl;
+  }
+
+  public boolean isWroteByUser(User user) {
+    return this.user.equals(user);
   }
 }

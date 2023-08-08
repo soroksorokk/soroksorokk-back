@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -73,10 +74,10 @@ public class FeedController {
       @ApiResponse(responseCode = "200", description = "게시글 페이징 조회 성공")})
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public void selectFeeds(
+  public Page<FeedRes> selectFeeds(
       @RequestParam FeedSearchCond cond
   ) {
-
+    return feedService.selectFeeds(cond);
   }
 
   @ApiOperation(
@@ -90,8 +91,8 @@ public class FeedController {
       @RequestPart(required = false) MultipartFile image,
       @RequestPart FeedEditReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
-  ) {
-
+  ) throws IOException {
+    feedService.editFeed(id, image, req, userDetails.getUser());
   }
 
   @ApiOperation(
@@ -104,7 +105,7 @@ public class FeedController {
       @PathVariable Long id,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-
+    feedService.deleteFeed(id, userDetails.getUser());
   }
 
 }
