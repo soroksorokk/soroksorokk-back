@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @ApiModel(value = "유저 프로필 수정 요청")
 @Getter
-public class UserProfileReq {
+public class UserProfileEditReq {
 
   private String nickname;
 
