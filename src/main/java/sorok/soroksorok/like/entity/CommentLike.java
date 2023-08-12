@@ -31,5 +31,4 @@ public class CommentLike extends Like {
     this.comment = comment;
   }
 
-
 }

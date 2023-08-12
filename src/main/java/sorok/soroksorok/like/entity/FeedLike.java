@@ -19,14 +19,14 @@ import sorok.soroksorok.user.entity.User;
 @Table(uniqueConstraints = {
     @UniqueConstraint(name = "fdRcmndCnst", columnNames = {"user_id", "feed_id"}),
 })
-public class PostLike extends Like {
+public class FeedLike extends Like {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "feed_id")
   private Feed feed;
 
   @Builder
-  public PostLike(User user, Feed feed) {
+  public FeedLike(User user, Feed feed) {
     this.user = user;
     this.feed = feed;
   }
