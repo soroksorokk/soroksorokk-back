@@ -23,8 +23,6 @@ public class AuthService {
   @Transactional
   public void signUp(SignUpRequest userSignUpDto, MultipartFile image) throws Exception {
 
-    checkIfEmailAndNicknameValid(userSignUpDto);
-
     String imageUrl = uploadImage(image);
 
     User user = User.builder()
@@ -50,14 +48,15 @@ public class AuthService {
     return imageUrl;
   }
 
-  private void checkIfEmailAndNicknameValid(SignUpRequest userSignUpDto) throws Exception {
-    if (userRepository.findByEmail(userSignUpDto.getEmail()).isPresent()) {
+  public void validateEmail(String value) throws Exception {
+    if (userRepository.findByEmail(value).isPresent()) {
       throw new Exception("이미 존재하는 이메일입니다.");
-    }
-
-    if (userRepository.findByNickname(userSignUpDto.getNickname()).isPresent()) {
-      throw new Exception("이미 존재하는 닉네임입니다.");
     }
   }
 
+  public void validateNickname(String value) throws Exception {
+    if (userRepository.findByNickname(value).isPresent()) {
+      throw new Exception("이미 존재하는 닉네임입니다.");
+    }
+  }
 }

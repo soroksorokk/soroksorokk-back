@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,28 @@ public class AuthController {
       @ApiResponse(responseCode = "200", description = "토큰 재발급 성공") })
   @PostMapping("/re-issue")
   public void reIssue() {
+  }
+
+  @ApiOperation(
+      value = "이메일 중복 검사")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "사용 가능한 이메일") })
+  @PostMapping("/validations/email")
+  public void checkEmail(
+      @RequestParam String value
+  ) throws Exception {
+    authService.validateEmail(value);
+  }
+
+  @ApiOperation(
+      value = "닉네임 중복 검사")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "사용 가능한 닉네임") })
+  @PostMapping("/validations/nickname")
+  public void checkNickname(
+      @RequestParam String value
+  ) throws Exception {
+    authService.validateNickname(value);
   }
 
 }
