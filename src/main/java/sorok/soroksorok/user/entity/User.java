@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sorok.soroksorok.user.dto.UserProfileReq;
+import sorok.soroksorok.user.dto.UserProfileEditReq;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -54,7 +54,7 @@ public class User {
     this.refreshToken = updateRefreshToken;
   }
 
-  public void editProfile(UserProfileReq req, String imageUrl) {
+  public void editProfile(UserProfileEditReq req, String imageUrl) {
     this.nickname = req.getNickname();
     this.imageUrl = imageUrl;
   }

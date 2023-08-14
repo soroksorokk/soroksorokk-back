@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import sorok.soroksorok.global.login.UserDetailsImpl;
-import sorok.soroksorok.user.dto.UserProfileReq;
+import sorok.soroksorok.user.dto.UserProfileEditReq;
 import sorok.soroksorok.user.dto.UserProfileRes;
 import sorok.soroksorok.user.service.UserService;
 import springfox.documentation.annotations.ApiIgnore;
@@ -51,7 +51,7 @@ public class UserController {
   @ResponseStatus(HttpStatus.OK)
   public void editMyProfile(
       @RequestPart MultipartFile image,
-      @RequestPart UserProfileReq req,
+      @RequestPart UserProfileEditReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) throws IOException {
     userService.editMyProfile(image, req, userDetails.getUser());

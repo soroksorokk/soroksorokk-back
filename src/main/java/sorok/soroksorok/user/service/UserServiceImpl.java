@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sorok.soroksorok.follow.service.FollowService;
 import sorok.soroksorok.global.s3.S3Upload;
-import sorok.soroksorok.user.dto.UserProfileReq;
+import sorok.soroksorok.user.dto.UserProfileEditReq;
 import sorok.soroksorok.user.dto.UserProfileRes;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.user.repository.UserRepository;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
   @Override
   @Transactional
-  public void editMyProfile(MultipartFile image, UserProfileReq req, User user)
+  public void editMyProfile(MultipartFile image, UserProfileEditReq req, User user)
       throws IOException {
     String imageUrl;
 
