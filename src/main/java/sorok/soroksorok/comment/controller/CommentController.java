@@ -40,38 +40,37 @@ public class CommentController {
       value = "댓글 작성")
   @ApiResponses({
       @ApiResponse(responseCode = "201", description = "댓글 작성 성공") })
-  @PostMapping("/posts/{postId}/comments")
+  @PostMapping("/feeds/{feedId}/comments")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
   public void createComment(
-      @RequestParam Long postId,
+      @RequestParam Long feedId,
       @RequestPart CommentReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.createComment(postId, req, userDetails.getUser());
+    commentService.createComment(feedId, req, userDetails.getUser());
   }
 
   @ApiOperation(
       value = "댓글 페이징 조회")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 페이징 조회 성공") })
-  @GetMapping("/posts/{postId}/comments")
+  @GetMapping("/feeds/{feedId}/comments")
   @ResponseStatus(HttpStatus.OK)
   public Page<CommentRes> selectComment(
-      @RequestParam Long postId,
+      @RequestParam Long feedId,
       @RequestParam Integer page
   ) {
-    return commentService.selectComment(postId, page);
+    return commentService.selectComment(feedId, page);
   }
 
   @ApiOperation(
       value = "댓글 수정")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 수정 성공") })
-  @PutMapping("/posts/{postId}/comments/{commentId}")
+  @PutMapping("/comments/{commentId}")
   @ResponseStatus(HttpStatus.OK)
   public void editComment(
-      @PathVariable Long postId,
       @PathVariable Long commentId,
       @RequestPart CommentEditReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -83,10 +82,9 @@ public class CommentController {
       value = "댓글 삭제")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 삭제 성공") })
-  @DeleteMapping("/posts/{postId}/comments/{commentId}")
+  @DeleteMapping("/comments/{commentId}")
   @ResponseStatus(HttpStatus.OK)
   public void deleteComment(
-      @PathVariable Long postId,
       @PathVariable Long commentId,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
@@ -99,59 +97,55 @@ public class CommentController {
       value = "대댓글 작성")
   @ApiResponses({
       @ApiResponse(responseCode = "201", description = "대댓글 작성 성공") })
-  @PostMapping("/posts/{postId}/comments/{commentId}/replies")
+  @PostMapping("/comments/{commentId}/replies")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
   public void createReply(
-      @RequestParam Long postId,
+      @RequestParam Long commentId,
       @RequestPart CommentReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.createComment(postId, req, userDetails.getUser());
+    commentService.createReply(commentId, req, userDetails.getUser());
   }
 
   @ApiOperation(
       value = "대댓글 페이징 조회")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 페이징 조회 성공") })
-  @GetMapping("/posts/{postId}/comments/{commentId}/replies")
+  @GetMapping("/comments/{commentId}/replies")
   @ResponseStatus(HttpStatus.OK)
   public Page<CommentRes> selectReplies(
-      @RequestParam Long postId,
+      @RequestParam Long commentId,
       @RequestParam Integer page
   ) {
-    return commentService.selectComment(postId, page);
+    return commentService.selectReplies(commentId, page);
   }
 
   @ApiOperation(
       value = "대댓글 수정")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "대댓글 수정 성공") })
-  @PutMapping("/posts/{postId}/comments/{commentId}/replies/{replyId}")
+  @PutMapping("/replies/{replyId}")
   @ResponseStatus(HttpStatus.OK)
   public void editReply(
-      @PathVariable Long postId,
-      @PathVariable Long commentId,
       @PathVariable Long replyId,
       @RequestPart CommentEditReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.editComment(commentId, req, userDetails.getUser());
+    commentService.editReply(replyId, req, userDetails.getUser());
   }
 
   @ApiOperation(
       value = "대댓글 삭제")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 삭제 성공") })
-  @DeleteMapping("/posts/{postId}/comments/{commentId}/replies/{replyId}")
+  @DeleteMapping("/replies/{replyId}")
   @ResponseStatus(HttpStatus.OK)
   public void deleteReply(
-      @PathVariable Long postId,
-      @PathVariable Long commentId,
       @PathVariable Long replyId,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.deleteComment(commentId, userDetails.getUser());
+    commentService.deleteReply(replyId, userDetails.getUser());
   }
 
 }
