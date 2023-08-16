@@ -13,4 +13,8 @@ public interface LikeService {
   void likeComment(Comment commentId, User user);
 
   void unlikeComment(Comment commentId, User user);
+
+  Long selectFeedLikeCount(Feed feed);
+
+  Long selectCommentLikeCount(Comment comment);
 }

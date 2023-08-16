@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +63,22 @@ public class LikeController {
   ) {
     Comment comment = commentService.getCommentEntityById(commentId);
     likeService.unlikeComment(comment, userDetails.getUser());
+  }
+
+  @GetMapping("/feeds/{feedId}/likes")
+  public Long selectFeedLikeCount(
+      @PathVariable Long feedId
+  ) {
+    Feed feed = feedService.getFeedEntityById(feedId);
+    return likeService.selectFeedLikeCount(feed);
+  }
+
+  @GetMapping("/comments/{commentId}/likes")
+  public Long selectCommentLike(
+      @PathVariable Long commentId
+  ) {
+    Comment comment = commentService.getCommentEntityById(commentId);
+    return likeService.selectCommentLikeCount(comment);
   }
 
 }

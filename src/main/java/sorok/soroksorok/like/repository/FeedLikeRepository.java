@@ -8,6 +8,8 @@ import sorok.soroksorok.user.entity.User;
 
 public interface FeedLikeRepository extends JpaRepository<FeedLike, Long> {
 
+  long countByFeed(Feed feed);
+
   boolean existsByUserAndFeed(
       User user, Feed feed);
 

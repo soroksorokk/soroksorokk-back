@@ -8,6 +8,9 @@ import sorok.soroksorok.user.entity.User;
 
 public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> {
 
+  long countByComment(
+      Comment comment);
+
   boolean existsByUserAndComment(
       User user, Comment comment);
 

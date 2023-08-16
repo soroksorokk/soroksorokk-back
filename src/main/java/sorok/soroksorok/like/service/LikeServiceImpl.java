@@ -51,6 +51,19 @@ public class LikeServiceImpl implements LikeService {
         .orElseThrow(RuntimeException::new);
     commentLikeRepository.delete(commentLike);
   }
+
+  @Override
+  @Transactional
+  public Long selectFeedLikeCount(Feed feed) {
+    return feedLikeRepository.countByFeed(feed);
+  }
+
+  @Override
+  @Transactional
+  public Long selectCommentLikeCount(Comment comment) {
+    return commentLikeRepository.countByComment(comment);
+  }
+
   private void validateIfUserAlreadyLiked(Object obj, User user) {
     if (obj instanceof Feed) {
       Feed feed = (Feed) obj;
