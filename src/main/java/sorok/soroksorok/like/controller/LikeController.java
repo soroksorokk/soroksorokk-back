@@ -38,6 +38,7 @@ public class LikeController {
     likeService.likeFeed(feed, userDetails.getUser());
   }
 
+  @Transactional
   @DeleteMapping("/feeds/{postId}/likes")
   public void unlikeFeed(
       @PathVariable Long feedId,
@@ -47,6 +48,7 @@ public class LikeController {
     likeService.unlikeFeed(feed, userDetails.getUser());
   }
 
+  @Transactional
   @PostMapping("/comments/{commentId}/likes")
   public void likeComment(
       @PathVariable Long commentId,
@@ -56,6 +58,7 @@ public class LikeController {
     likeService.likeComment(comment, userDetails.getUser());
   }
 
+  @Transactional
   @DeleteMapping("/comments/{commentId}/likes")
   public void unlikeComment(
       @PathVariable Long commentId,
@@ -65,6 +68,7 @@ public class LikeController {
     likeService.unlikeComment(comment, userDetails.getUser());
   }
 
+  @Transactional
   @GetMapping("/feeds/{feedId}/likes")
   public Long selectFeedLikeCount(
       @PathVariable Long feedId
@@ -73,6 +77,7 @@ public class LikeController {
     return likeService.selectFeedLikeCount(feed);
   }
 
+  @Transactional
   @GetMapping("/comments/{commentId}/likes")
   public Long selectCommentLike(
       @PathVariable Long commentId
