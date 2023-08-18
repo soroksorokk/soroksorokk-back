@@ -39,7 +39,7 @@ public class LikeController {
   }
 
   @Transactional
-  @DeleteMapping("/feeds/{postId}/likes")
+  @DeleteMapping("/feeds/{feedId}/likes")
   public void unlikeFeed(
       @PathVariable Long feedId,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
