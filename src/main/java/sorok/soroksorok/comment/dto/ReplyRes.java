@@ -28,8 +28,8 @@ public class ReplyRes {
         .build();
   }
 
-  public static List<CommentRes> of(Page<Comment> comments) {
-    return comments.stream().map(CommentRes::of).collect(Collectors.toList());
+  public static List<ReplyRes> of(Page<Reply> comments) {
+    return comments.stream().map(ReplyRes::of).collect(Collectors.toList());
   }
 
 }

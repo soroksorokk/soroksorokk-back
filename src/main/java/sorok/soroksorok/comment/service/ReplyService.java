@@ -1,18 +1,18 @@
 package sorok.soroksorok.comment.service;
 
 import org.springframework.data.domain.Page;
-import sorok.soroksorok.comment.dto.CommentEditReq;
-import sorok.soroksorok.comment.dto.CommentReq;
-import sorok.soroksorok.comment.dto.CommentRes;
+import sorok.soroksorok.comment.dto.ReplyEditReq;
+import sorok.soroksorok.comment.dto.ReplyReq;
+import sorok.soroksorok.comment.dto.ReplyRes;
 import sorok.soroksorok.user.entity.User;
 
 public interface ReplyService {
 
-  void createReply(Long commentId, CommentReq req, User user);
+  void createReply(Long commentId, ReplyReq req, User user);
 
-  Page<CommentRes> selectReplies(Long commentId, Integer page);
+  Page<ReplyRes> selectReplies(Long commentId, Integer page);
 
-  void editReply(Long replyId, CommentEditReq req, User user);
+  void editReply(Long replyId, ReplyEditReq req, User user);
 
   void deleteReply(Long replyId, User user);
 

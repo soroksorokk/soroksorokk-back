@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import sorok.soroksorok.comment.dto.CommentEditReq;
 import sorok.soroksorok.comment.dto.CommentReq;
 import sorok.soroksorok.comment.dto.CommentRes;
+import sorok.soroksorok.comment.dto.ReplyEditReq;
+import sorok.soroksorok.comment.dto.ReplyReq;
+import sorok.soroksorok.comment.dto.ReplyRes;
 import sorok.soroksorok.comment.service.ReplyService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 import springfox.documentation.annotations.ApiIgnore;
@@ -45,7 +48,7 @@ public class ReplyController {
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
   public void createReply(
       @RequestParam Long commentId,
-      @RequestPart CommentReq req,
+      @RequestPart ReplyReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
     replyService.createReply(commentId, req, userDetails.getUser());
@@ -57,11 +60,11 @@ public class ReplyController {
       @ApiResponse(responseCode = "200", description = "댓글 페이징 조회 성공") })
   @GetMapping("/comments/{commentId}/replies")
   @ResponseStatus(HttpStatus.OK)
-  public Page<CommentRes> selectReplies(
-      @RequestParam Long commentId,
+  public Page<ReplyRes> selectReplies(
+      @RequestParam Long replyId,
       @RequestParam Integer page
   ) {
-    return replyService.selectReplies(commentId, page);
+    return replyService.selectReplies(replyId, page);
   }
 
   @ApiOperation(
@@ -72,7 +75,7 @@ public class ReplyController {
   @ResponseStatus(HttpStatus.OK)
   public void editReply(
       @PathVariable Long replyId,
-      @RequestPart CommentEditReq req,
+      @RequestPart ReplyEditReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
     replyService.editReply(replyId, req, userDetails.getUser());

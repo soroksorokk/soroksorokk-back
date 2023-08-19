@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sorok.soroksorok.comment.dto.CommentEditReq;
+import sorok.soroksorok.comment.dto.ReplyEditReq;
 import sorok.soroksorok.global.entity.BaseEntity;
 import sorok.soroksorok.user.entity.User;
 
@@ -38,7 +38,7 @@ public class Reply extends BaseEntity {
     this.parentComment = parentComment;
   }
 
-  public void editComment(CommentEditReq req) {
+  public void editComment(ReplyEditReq req) {
     this.content = req.getContent();
   }
 
