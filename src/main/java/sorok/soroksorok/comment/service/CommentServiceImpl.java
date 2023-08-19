@@ -62,6 +62,12 @@ public class CommentServiceImpl implements CommentService {
     commentRepository.delete(comment);
   }
 
+  @Override
+  @Transactional
+  public Comment getCommentEntityById(Long commentId) {
+    return commentRepository.findById(commentId).orElseThrow(RuntimeException::new);
+  }
+
   private static void validateUser(User user, Comment comment) {
     if (!comment.isAccessibleUser(user)) {
       throw new RuntimeException();

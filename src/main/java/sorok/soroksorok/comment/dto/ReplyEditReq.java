@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CommentEditReq {
+public class ReplyEditReq {
 
   private String content;
 

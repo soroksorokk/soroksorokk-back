@@ -23,72 +23,72 @@ import org.springframework.web.bind.annotation.RestController;
 import sorok.soroksorok.comment.dto.CommentEditReq;
 import sorok.soroksorok.comment.dto.CommentReq;
 import sorok.soroksorok.comment.dto.CommentRes;
-import sorok.soroksorok.comment.service.CommentService;
+import sorok.soroksorok.comment.service.ReplyService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = "Comment API - 댓글 기능 API")
+@Api(tags = "Reply API - 대댓글 기능 API")
 @Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class CommentController {
+public class ReplyController {
 
-  private final CommentService commentService;
+  private final ReplyService replyService;
 
   @ApiOperation(
-      value = "댓글 작성")
+      value = "대댓글 작성")
   @ApiResponses({
-      @ApiResponse(responseCode = "201", description = "댓글 작성 성공") })
-  @PostMapping("/feeds/{feedId}/comments")
+      @ApiResponse(responseCode = "201", description = "대댓글 작성 성공") })
+  @PostMapping("/comments/{commentId}/replies")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-  public void createComment(
-      @RequestParam Long feedId,
+  public void createReply(
+      @RequestParam Long commentId,
       @RequestPart CommentReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.createComment(feedId, req, userDetails.getUser());
+    replyService.createReply(commentId, req, userDetails.getUser());
   }
 
   @ApiOperation(
-      value = "댓글 페이징 조회")
+      value = "대댓글 페이징 조회")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 페이징 조회 성공") })
-  @GetMapping("/feeds/{feedId}/comments")
+  @GetMapping("/comments/{commentId}/replies")
   @ResponseStatus(HttpStatus.OK)
-  public Page<CommentRes> selectComment(
-      @RequestParam Long feedId,
+  public Page<CommentRes> selectReplies(
+      @RequestParam Long commentId,
       @RequestParam Integer page
   ) {
-    return commentService.selectComment(feedId, page);
+    return replyService.selectReplies(commentId, page);
   }
 
   @ApiOperation(
-      value = "댓글 수정")
+      value = "대댓글 수정")
   @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "댓글 수정 성공") })
-  @PutMapping("/comments/{commentId}")
+      @ApiResponse(responseCode = "200", description = "대댓글 수정 성공") })
+  @PutMapping("/replies/{replyId}")
   @ResponseStatus(HttpStatus.OK)
-  public void editComment(
-      @PathVariable Long commentId,
+  public void editReply(
+      @PathVariable Long replyId,
       @RequestPart CommentEditReq req,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.editComment(commentId, req, userDetails.getUser());
+    replyService.editReply(replyId, req, userDetails.getUser());
   }
 
   @ApiOperation(
-      value = "댓글 삭제")
+      value = "대댓글 삭제")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "댓글 삭제 성공") })
-  @DeleteMapping("/comments/{commentId}")
+  @DeleteMapping("/replies/{replyId}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteComment(
-      @PathVariable Long commentId,
+  public void deleteReply(
+      @PathVariable Long replyId,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
-    commentService.deleteComment(commentId, userDetails.getUser());
+    replyService.deleteReply(replyId, userDetails.getUser());
   }
 
 }
