@@ -3,11 +3,14 @@ package sorok.soroksorok.feed.service;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sorok.soroksorok.feed.dto.FeedEditReq;
+import sorok.soroksorok.feed.dto.FeedPagingRes;
 import sorok.soroksorok.feed.dto.FeedSearchCond;
+import sorok.soroksorok.feed.entity.Mood;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.feed.dto.FeedReq;
 import sorok.soroksorok.feed.dto.FeedRes;
@@ -34,12 +37,17 @@ public class FeedServiceImpl implements FeedService {
   @Transactional(readOnly = true)
   public FeedRes selectFeed(Long id) {
     Feed feed = getFeedEntityById(id);
-    return FeedRes.createDto(feed);
+    return FeedRes.of(feed);
   }
 
   @Override
-  @Transactional(readOnly = true)
-  public Page<FeedRes> selectFeeds(FeedSearchCond cond) {
+  @Transactional
+  public Page<FeedPagingRes> selectFeeds(Mood mood, Integer page, String sortBy) {
+    PageRequest of = PageRequest.of(page - 1, 10);
+
+    FeedSearchCond cond = FeedSearchCond.of(page - 1, sortBy, mood);
+
+
     return null;
   }
 

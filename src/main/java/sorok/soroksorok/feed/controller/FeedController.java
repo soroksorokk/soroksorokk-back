@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import sorok.soroksorok.feed.dto.FeedEditReq;
+import sorok.soroksorok.feed.dto.FeedPagingRes;
 import sorok.soroksorok.feed.dto.FeedReq;
 import sorok.soroksorok.feed.dto.FeedRes;
 import sorok.soroksorok.feed.dto.FeedSearchCond;
+import sorok.soroksorok.feed.entity.Mood;
 import sorok.soroksorok.feed.service.FeedService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 import springfox.documentation.annotations.ApiIgnore;
@@ -74,10 +76,12 @@ public class FeedController {
       @ApiResponse(responseCode = "200", description = "게시글 페이징 조회 성공")})
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public Page<FeedRes> selectFeeds(
-      @RequestParam FeedSearchCond cond
+  public Page<FeedPagingRes> selectFeeds(
+      @RequestParam(required = false, defaultValue = "NONE") Mood mood,
+      @RequestParam(required = false, defaultValue = "1") Integer page,
+      @RequestParam(required = false, defaultValue = "NEW") String sortBy
   ) {
-    return feedService.selectFeeds(cond);
+    return feedService.selectFeeds(mood, page, sortBy);
   }
 
   @ApiOperation(

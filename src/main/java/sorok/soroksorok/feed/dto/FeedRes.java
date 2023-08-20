@@ -1,6 +1,5 @@
 package sorok.soroksorok.feed.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -25,7 +24,7 @@ public class FeedRes {
 
   private LocalDateTime modifiedAt;
 
-  public static FeedRes createDto(Feed feed) {
+  public static FeedRes of(Feed feed) {
     return FeedRes
         .builder()
         .title(feed.getTitle())
