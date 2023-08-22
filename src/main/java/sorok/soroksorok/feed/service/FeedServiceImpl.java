@@ -1,16 +1,15 @@
 package sorok.soroksorok.feed.service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sorok.soroksorok.feed.dto.FeedEditReq;
 import sorok.soroksorok.feed.dto.FeedPagingRes;
-import sorok.soroksorok.feed.dto.FeedSearchCond;
-import sorok.soroksorok.feed.entity.Mood;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.feed.dto.FeedReq;
 import sorok.soroksorok.feed.dto.FeedRes;
@@ -18,6 +17,7 @@ import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.repository.FeedRepository;
 import sorok.soroksorok.global.s3.S3Upload;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FeedServiceImpl implements FeedService {
@@ -42,17 +42,6 @@ public class FeedServiceImpl implements FeedService {
 
   @Override
   @Transactional
-  public Page<FeedPagingRes> selectFeeds(Mood mood, Integer page, String sortBy) {
-    PageRequest of = PageRequest.of(page - 1, 10);
-
-    FeedSearchCond cond = FeedSearchCond.of(page - 1, sortBy, mood);
-
-
-    return null;
-  }
-
-  @Override
-  @Transactional
   public void editFeed(Long id, MultipartFile image, FeedEditReq req, User user) throws IOException {
     Feed feed = getFeedEntityById(id);
     validateIfUserWroteFeed(feed, user);
@@ -66,6 +55,13 @@ public class FeedServiceImpl implements FeedService {
     Feed feed = getFeedEntityById(id);
     validateIfUserWroteFeed(feed, user);
     feedRepository.delete(feed);
+  }
+
+  @Override
+  @Transactional
+  public List<FeedPagingRes> selectFeedsByNickname(String nickname) {
+    List<Feed> feeds = feedRepository.findByUser_NicknameOrderByCreatedAtDesc(nickname);
+    return feeds.stream().map(FeedPagingRes::of).collect(Collectors.toList());
   }
 
   @Override

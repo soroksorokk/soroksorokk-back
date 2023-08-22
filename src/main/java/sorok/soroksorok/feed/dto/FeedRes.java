@@ -12,6 +12,12 @@ import sorok.soroksorok.feed.entity.Mood;
 @Builder
 public class FeedRes {
 
+  private Long id;
+
+  private String nickname;
+
+  private String profileImage;
+
   private String title;
 
   private String content;
@@ -27,6 +33,9 @@ public class FeedRes {
   public static FeedRes of(Feed feed) {
     return FeedRes
         .builder()
+        .id(feed.getId())
+        .nickname(feed.getUser().getNickname())
+        .profileImage(feed.getUser().getImageUrl())
         .title(feed.getTitle())
         .content(feed.getContent())
         .mood(feed.getMood())

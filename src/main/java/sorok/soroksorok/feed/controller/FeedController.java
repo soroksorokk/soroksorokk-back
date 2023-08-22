@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,6 @@ import sorok.soroksorok.feed.dto.FeedEditReq;
 import sorok.soroksorok.feed.dto.FeedPagingRes;
 import sorok.soroksorok.feed.dto.FeedReq;
 import sorok.soroksorok.feed.dto.FeedRes;
-import sorok.soroksorok.feed.entity.Mood;
 import sorok.soroksorok.feed.service.FeedService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 import springfox.documentation.annotations.ApiIgnore;
@@ -68,20 +66,6 @@ public class FeedController {
   }
 
   @ApiOperation(
-      value = "게시글 페이징 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "게시글 페이징 조회 성공")})
-  @GetMapping
-  @ResponseStatus(HttpStatus.OK)
-  public Page<FeedPagingRes> selectFeeds(
-      @RequestParam(required = false, defaultValue = "NONE") Mood mood,
-      @RequestParam(required = false, defaultValue = "1") Integer page,
-      @RequestParam(required = false, defaultValue = "NEW") String sortBy
-  ) {
-    return feedService.selectFeeds(mood, page, sortBy);
-  }
-
-  @ApiOperation(
       value = "게시글 수정")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "게시글 수정 성공") })
@@ -108,5 +92,18 @@ public class FeedController {
   ) {
     feedService.deleteFeed(id, userDetails.getUser());
   }
+
+  @ApiOperation(
+      value = "사용자가 작성한 게시글 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 삭제 성공") })
+  @GetMapping("/user/{nickname}")
+  @ResponseStatus(HttpStatus.OK)
+  public List<FeedPagingRes> selectFeedsByNickname(
+      @PathVariable String nickname
+  ) {
+    return feedService.selectFeedsByNickname(nickname);
+  }
+
 
 }
