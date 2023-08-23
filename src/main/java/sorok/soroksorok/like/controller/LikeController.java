@@ -78,7 +78,7 @@ public class LikeController {
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
     Reply reply = replyService.getReplyEntityById(replyId);
-    replyService.likeReply(reply, userDetails.getUser());
+    likeService.likeReply(reply, userDetails.getUser());
   }
 
   @Transactional
@@ -88,7 +88,7 @@ public class LikeController {
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {
     Reply reply = replyService.getReplyEntityById(replyId);
-    replyService.unlikeReply(reply, userDetails.getUser());
+    likeService.unlikeReply(reply, userDetails.getUser());
   }
 
   @Transactional

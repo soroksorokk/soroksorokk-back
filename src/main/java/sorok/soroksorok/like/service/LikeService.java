@@ -20,4 +20,8 @@ public interface LikeService {
   Long selectCommentLikeCount(Comment comment);
 
   Long selectReplyLikeCount(Reply reply);
+
+  void likeReply(Reply reply, User user);
+
+  void unlikeReply(Reply reply, User user);
 }

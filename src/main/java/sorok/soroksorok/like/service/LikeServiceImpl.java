@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sorok.soroksorok.comment.entity.Comment;
 import sorok.soroksorok.comment.entity.Reply;
-import sorok.soroksorok.comment.repository.ReplyRepository;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.like.entity.CommentLike;
 import sorok.soroksorok.like.entity.FeedLike;
+import sorok.soroksorok.like.entity.ReplyLike;
 import sorok.soroksorok.like.repository.CommentLikeRepository;
 import sorok.soroksorok.like.repository.FeedLikeRepository;
 import sorok.soroksorok.like.repository.ReplyLikeRepository;
@@ -19,8 +19,6 @@ import sorok.soroksorok.user.entity.User;
 @Service
 @RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService {
-
-  private final ReplyRepository replyRepository;
 
   private final CommentLikeRepository commentLikeRepository;
   private final FeedLikeRepository feedLikeRepository;
@@ -61,21 +59,35 @@ public class LikeServiceImpl implements LikeService {
   @Override
   @Transactional
   public Long selectFeedLikeCount(Feed feed) {
-    long count = feedLikeRepository.countByFeed(feed);
-    return count;
+    return feedLikeRepository.countByFeed(feed);
   }
 
   @Override
   @Transactional
   public Long selectCommentLikeCount(Comment comment) {
-    long count = commentLikeRepository.countByComment(comment);
-    return count;
+    return commentLikeRepository.countByComment(comment);
   }
 
   @Override
+  @Transactional
   public Long selectReplyLikeCount(Reply reply) {
-    long count = replyLikeRepository.countByReply(reply);
-    return count;
+    return replyLikeRepository.countByReply(reply);
+  }
+
+  @Override
+  @Transactional
+  public void likeReply(Reply reply, User user) {
+    validateIfUserAlreadyLiked(reply, user);
+    ReplyLike replyLike = ReplyLike.builder().reply(reply).user(user).build();
+    replyLikeRepository.save(replyLike);
+  }
+
+  @Override
+  @Transactional
+  public void unlikeReply(Reply reply, User user) {
+    ReplyLike replyLike = replyLikeRepository.findByUserAndReply(user, reply)
+        .orElseThrow(RuntimeException::new);
+    replyLikeRepository.delete(replyLike);
   }
 
   private void validateIfUserAlreadyLiked(Object obj, User user) {
@@ -87,6 +99,11 @@ public class LikeServiceImpl implements LikeService {
     } else if (obj instanceof Comment) {
       Comment comment = (Comment) obj;
       if (commentLikeRepository.existsByUserAndComment(user, comment)) {
+        throw new RuntimeException();
+      }
+    } else if (obj instanceof Reply) {
+      Reply reply = (Reply) obj;
+      if (replyLikeRepository.existsByUserAndReply(user, reply)) {
         throw new RuntimeException();
       }
     } else {
