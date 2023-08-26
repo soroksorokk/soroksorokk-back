@@ -59,6 +59,12 @@ public class ReplyServiceImpl implements ReplyService{
     replyRepository.delete(reply);
   }
 
+  @Override
+  @Transactional
+  public Reply getReplyEntityById(Long replyId) {
+    return replyRepository.findById(replyId).orElseThrow(RuntimeException::new);
+  }
+
   private void validateUser(User user, Reply reply) {
     if (!reply.isAccessibleUser(user)) {
       throw new RuntimeException();

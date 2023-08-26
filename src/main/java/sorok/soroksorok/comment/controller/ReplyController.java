@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import sorok.soroksorok.comment.dto.CommentEditReq;
-import sorok.soroksorok.comment.dto.CommentReq;
-import sorok.soroksorok.comment.dto.CommentRes;
 import sorok.soroksorok.comment.dto.ReplyEditReq;
 import sorok.soroksorok.comment.dto.ReplyReq;
 import sorok.soroksorok.comment.dto.ReplyRes;
@@ -88,6 +85,19 @@ public class ReplyController {
   @DeleteMapping("/replies/{replyId}")
   @ResponseStatus(HttpStatus.OK)
   public void deleteReply(
+      @PathVariable Long replyId,
+      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
+  ) {
+    replyService.deleteReply(replyId, userDetails.getUser());
+  }
+
+  @ApiOperation(
+      value = "대댓글 갯수 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "댓글 삭제 성공") })
+  @DeleteMapping("/replies/{replyId}")
+  @ResponseStatus(HttpStatus.OK)
+  public void selectRepliesCount(
       @PathVariable Long replyId,
       @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
   ) {

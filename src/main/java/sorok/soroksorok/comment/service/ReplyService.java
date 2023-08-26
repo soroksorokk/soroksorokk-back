@@ -19,7 +19,4 @@ public interface ReplyService {
 
   Reply getReplyEntityById(Long replyId);
 
-  void likeReply(Reply reply, User user);
-
-  void unlikeReply(Reply reply, User user);
 }
