@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import sorok.soroksorok.comment.dto.ReplyEditReq;
 import sorok.soroksorok.comment.dto.ReplyReq;
 import sorok.soroksorok.comment.dto.ReplyRes;
+import sorok.soroksorok.comment.entity.Reply;
 import sorok.soroksorok.user.entity.User;
 
 public interface ReplyService {
@@ -16,4 +17,9 @@ public interface ReplyService {
 
   void deleteReply(Long replyId, User user);
 
+  Reply getReplyEntityById(Long replyId);
+
+  void likeReply(Reply reply, User user);
+
+  void unlikeReply(Reply reply, User user);
 }

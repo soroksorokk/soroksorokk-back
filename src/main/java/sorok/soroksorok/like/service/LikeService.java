@@ -1,6 +1,7 @@
 package sorok.soroksorok.like.service;
 
 import sorok.soroksorok.comment.entity.Comment;
+import sorok.soroksorok.comment.entity.Reply;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.user.entity.User;
 
@@ -17,4 +18,6 @@ public interface LikeService {
   Long selectFeedLikeCount(Feed feed);
 
   Long selectCommentLikeCount(Comment comment);
+
+  Long selectReplyLikeCount(Reply reply);
 }
