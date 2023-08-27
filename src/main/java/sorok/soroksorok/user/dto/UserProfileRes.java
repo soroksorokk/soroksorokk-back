@@ -10,6 +10,10 @@ import sorok.soroksorok.user.entity.User;
 @Builder
 public class UserProfileRes {
 
+  private String description;
+
+  private String tags;
+
   private String email;
 
   private String imageUrl;
@@ -20,10 +24,12 @@ public class UserProfileRes {
 
   private Long followingCnt;
 
-  public static UserProfileRes createDto(User user, Long followerCnt, Long followingCnt) {
+  public static UserProfileRes of(User user, Long followerCnt, Long followingCnt) {
     return UserProfileRes
         .builder()
         .email(user.getEmail())
+        .description(user.getDescription())
+        .tags(user.getTags())
         .imageUrl(user.getImageUrl())
         .nickname(user.getNickname())
         .followerCnt(followerCnt)

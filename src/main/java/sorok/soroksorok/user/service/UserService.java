@@ -12,6 +12,10 @@ public interface UserService {
 
   UserProfileRes selectMyProfile(User user);
 
-  void editMyProfile(MultipartFile image, UserProfileEditReq req, User user)
-      throws IOException;
+  void editMyProfileImage(MultipartFile image, User user) throws IOException;
+
+  void editMyProfileDescription(UserProfileEditReq req, User user);
+
+  UserProfileRes selectUserProfileByNickname(String nickname);
+
 }

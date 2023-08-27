@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
   @Override
   @Transactional
   public User getUserEntityByNickname(String nickname) {
-    return userRepository.findByNickname(nickname).orElseThrow(() -> new RuntimeException());
+    return userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
   }
 
   @Override
@@ -33,23 +33,39 @@ public class UserServiceImpl implements UserService{
   public UserProfileRes selectMyProfile(User user) {
     Long followingCount = followService.countMyFollowingCount(user);
     Long followerCount = followService.countMyFollowerCount(user);
-    return UserProfileRes.createDto(user, followingCount, followerCount);
+    return UserProfileRes.of(user, followingCount, followerCount);
   }
 
   @Override
   @Transactional
-  public void editMyProfile(MultipartFile image, UserProfileEditReq req, User user)
-      throws IOException {
+  public void editMyProfileImage(MultipartFile image, User user) throws IOException {
     String imageUrl;
+    User reqUser = getUserEntityByNickname(user.getNickname());
 
     if (image.isEmpty()) {
-      imageUrl = "default";
+      imageUrl = "default.jpg";
     } else {
       imageUrl = s3Upload.upload(image);
     }
 
-    user.editProfile(req, imageUrl);
+    reqUser.editProfileImage(imageUrl);
   }
 
+  @Override
+  @Transactional
+  public void editMyProfileDescription(UserProfileEditReq req, User user) {
+    if (userRepository.existsByNickname(req.getNickname())) {
+      throw new RuntimeException("닉네임 중복");
+    }
+
+    User reqUser = getUserEntityByNickname(user.getNickname());
+    reqUser.editProfileDescription(req);
+  }
+
+  @Override
+  public UserProfileRes selectUserProfileByNickname(String nickname) {
+    User user = getUserEntityByNickname(nickname);
+    return selectMyProfile(user);
+  }
 
 }

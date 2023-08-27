@@ -36,11 +36,15 @@ public class User {
 
   private String imageUrl; // 프로필 이미지
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
+  private String description;
+
+  private String tags;
 
   @Enumerated(EnumType.STRING)
   private SocialType socialType; // KAKAO, NAVER, GOOGLE
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
   private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
@@ -54,8 +58,13 @@ public class User {
     this.refreshToken = updateRefreshToken;
   }
 
-  public void editProfile(UserProfileEditReq req, String imageUrl) {
+  public void editProfileDescription(UserProfileEditReq req) {
     this.nickname = req.getNickname();
+    this.description = req.getDescription();
+    this.tags = req.getTags();
+  }
+
+  public void editProfileImage(String imageUrl) {
     this.imageUrl = imageUrl;
   }
 }

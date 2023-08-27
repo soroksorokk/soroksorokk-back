@@ -9,4 +9,8 @@ public class UserProfileEditReq {
 
   private String nickname;
 
+  private String tags;
+
+  private String description;
+
 }
