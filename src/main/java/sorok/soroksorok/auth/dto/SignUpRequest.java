@@ -14,7 +14,7 @@ public class SignUpRequest {
   @ApiModelProperty(value="이메일", example = "test@test.com", required = true)
   private String email;
 
-  @ApiModelProperty(value="비밀번호", example = "pssword", required = true)
+  @ApiModelProperty(value="비밀번호", example = "password", required = true)
   private String password;
 
   @ApiModelProperty(value="닉네임", example = "어피치", required = true)
