@@ -43,8 +43,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
 
     // db
-    runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'mysql:mysql-connector-java'
 
     // lombok
     compileOnly 'org.projectlombok:lombok'
@@ -61,7 +61,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // Swagger 3.0.0
-    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', versi가on: '3.0.0'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
 
 }
