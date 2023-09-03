@@ -91,17 +91,4 @@ public class ReplyController {
     replyService.deleteReply(replyId, userDetails.getUser());
   }
 
-  @ApiOperation(
-      value = "대댓글 갯수 조회")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "댓글 삭제 성공") })
-  @DeleteMapping("/replies/{replyId}")
-  @ResponseStatus(HttpStatus.OK)
-  public void selectRepliesCount(
-      @PathVariable Long replyId,
-      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
-  ) {
-    replyService.deleteReply(replyId, userDetails.getUser());
-  }
-
 }
