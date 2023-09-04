@@ -9,12 +9,12 @@ import sorok.soroksorok.comment.entity.Comment;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.user.entity.User;
 
-@ApiModel(value = "피드 작성 요청")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ApiModel(value = "댓글 작성 요청")
 public class CommentReq {
 
-  @ApiModelProperty(value="내용", example = "내용입니다.", required = true)
+  @ApiModelProperty(value="댓글 내용", example = "내용입니다.", required = true)
   private String content;
 
   public Comment toEntity(Feed feed, CommentReq req, User user) {
