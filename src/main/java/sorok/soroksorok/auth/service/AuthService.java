@@ -27,6 +27,8 @@ public class AuthService {
 
     User user = User.builder()
         .email(userSignUpDto.getEmail())
+        .description("")
+        .tags("")
         .password(passwordEncoder.encode(userSignUpDto.getPassword()))
         .nickname(userSignUpDto.getNickname())
         .imageUrl(imageUrl)
