@@ -1,6 +1,7 @@
 package sorok.soroksorok.follow.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import sorok.soroksorok.user.entity.User;
@@ -10,7 +11,10 @@ import sorok.soroksorok.user.entity.User;
 @Builder
 public class FollowRes {
 
+  @ApiModelProperty(value="닉네임", example = "닉네임", required = true)
   private String nickname;
+
+  @ApiModelProperty(value="사용자 이미지 URL", example = "1", required = true)
   private String imageUrl;
 
   public static FollowRes makeDto(User user) {
