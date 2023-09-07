@@ -1,5 +1,9 @@
 package sorok.soroksorok.like.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +28,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(tags = "Like API - 좋아요 기능 API")
 public class LikeController {
 
   private final LikeService likeService;
@@ -31,6 +36,10 @@ public class LikeController {
   private final ReplyService replyService;
   private final CommentService commentService;
 
+  @ApiOperation(
+      value = "게시글 좋아요")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "좋아요 성공") })
   @Transactional
   @PostMapping("/feeds/{feedId}/likes")
   public void likeFeed(
@@ -41,6 +50,10 @@ public class LikeController {
     likeService.likeFeed(feed, userDetails.getUser());
   }
 
+  @ApiOperation(
+      value = "게시글 좋아요 취소")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "좋아요 취소 성공") })
   @Transactional
   @DeleteMapping("/feeds/{feedId}/likes")
   public void unlikeFeed(
@@ -51,6 +64,10 @@ public class LikeController {
     likeService.unlikeFeed(feed, userDetails.getUser());
   }
 
+  @ApiOperation(
+      value = "댓글 좋아요")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "댓글 좋아요 성공") })
   @Transactional
   @PostMapping("/comments/{commentId}/likes")
   public void likeComment(
@@ -61,6 +78,10 @@ public class LikeController {
     likeService.likeComment(comment, userDetails.getUser());
   }
 
+  @ApiOperation(
+      value = "댓글 좋아요 취소")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "댓글 좋아요 취소 성공") })
   @Transactional
   @DeleteMapping("/comments/{commentId}/likes")
   public void unlikeComment(
@@ -71,6 +92,10 @@ public class LikeController {
     likeService.unlikeComment(comment, userDetails.getUser());
   }
 
+  @ApiOperation(
+      value = "답글 좋아요")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "답글 좋아요 성공") })
   @Transactional
   @PostMapping("/replies/{replyId}/likes")
   public void likeReply(
@@ -81,6 +106,10 @@ public class LikeController {
     likeService.likeReply(reply, userDetails.getUser());
   }
 
+  @ApiOperation(
+      value = "답글 좋아요 취소")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "답글 좋아요 취소 성공") })
   @Transactional
   @DeleteMapping("/replies/{replyId}/likes")
   public void unlikeReply(
@@ -91,6 +120,10 @@ public class LikeController {
     likeService.unlikeReply(reply, userDetails.getUser());
   }
 
+  @ApiOperation(
+      value = "게시글 좋아요 갯수 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 좋아요 갯수 조회 성공") })
   @Transactional
   @GetMapping("/feeds/{feedId}/likes")
   public Long selectFeedLikeCount(
@@ -100,6 +133,10 @@ public class LikeController {
     return likeService.selectFeedLikeCount(feed);
   }
 
+  @ApiOperation(
+      value = "댓글 좋아요 갯수 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "댓글 좋아요 갯수 조회 성공") })
   @Transactional
   @GetMapping("/comments/{commentId}/likes")
   public Long selectCommentLike(
@@ -109,6 +146,10 @@ public class LikeController {
     return likeService.selectCommentLikeCount(comment);
   }
 
+  @ApiOperation(
+      value = "대댓글 좋아요 갯수 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "대댓글 좋아요 갯수 조회 성공") })
   @Transactional
   @GetMapping("/replies/{replyId}/likes")
   public Long selectReplyLike(
