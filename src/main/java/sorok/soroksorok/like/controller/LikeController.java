@@ -24,11 +24,11 @@ import sorok.soroksorok.global.login.UserDetailsImpl;
 import sorok.soroksorok.like.service.LikeService;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = "Like API - 좋아요 기능 API")
 @Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@Api(tags = "Like API - 좋아요 기능 API")
 public class LikeController {
 
   private final LikeService likeService;
