@@ -42,6 +42,12 @@ public class AuthService {
 
   private String uploadImage(MultipartFile image) throws IOException {
     String imageUrl;
+
+    if (image == null) {
+      imageUrl = "https://soroksorok.s3.ap-northeast-2.amazonaws.com/default.jpg";
+      return imageUrl;
+    }
+
     if (!image.isEmpty()) {
       imageUrl = s3Upload.upload(image);
     } else {
