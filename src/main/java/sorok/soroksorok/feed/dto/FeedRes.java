@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.entity.Mood;
+import sorok.soroksorok.feed.entity.TempFeed;
 
 @ApiModel(value = "피드 조회 응답")
 @Getter
@@ -41,6 +42,21 @@ public class FeedRes {
   private LocalDateTime modifiedAt;
 
   public static FeedRes of(Feed feed) {
+    return FeedRes
+        .builder()
+        .id(feed.getId())
+        .nickname(feed.getUser().getNickname())
+        .profileImage(feed.getUser().getImageUrl())
+        .title(feed.getTitle())
+        .content(feed.getContent())
+        .mood(feed.getMood())
+        .imageUrl(feed.getImageUrl())
+        .createdAt(feed.getCreatedAt())
+        .modifiedAt(feed.getModifiedAt())
+        .build();
+  }
+
+  public static FeedRes of(TempFeed feed) {
     return FeedRes
         .builder()
         .id(feed.getId())

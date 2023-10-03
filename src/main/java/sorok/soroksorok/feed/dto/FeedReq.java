@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sorok.soroksorok.feed.entity.TempFeed;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.entity.Mood;
@@ -42,4 +43,16 @@ public class FeedReq {
         .build();
   }
 
+  public TempFeed toTempEntity(String imageUrl, User user) {
+    return TempFeed
+        .builder()
+        .title(this.title)
+        .content(this.content)
+        .artist(this.artist)
+        .music(this.music)
+        .mood(this.mood)
+        .imageUrl(imageUrl)
+        .user(user)
+        .build();
+  }
 }

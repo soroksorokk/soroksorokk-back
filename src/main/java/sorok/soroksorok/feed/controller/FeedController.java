@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ import sorok.soroksorok.feed.dto.FeedEditReq;
 import sorok.soroksorok.feed.dto.FeedPagingRes;
 import sorok.soroksorok.feed.dto.FeedReq;
 import sorok.soroksorok.feed.dto.FeedRes;
+import sorok.soroksorok.feed.entity.Mood;
 import sorok.soroksorok.feed.service.FeedService;
 import sorok.soroksorok.global.login.UserDetailsImpl;
 import springfox.documentation.annotations.ApiIgnore;
@@ -105,5 +108,44 @@ public class FeedController {
     return feedService.selectFeedsByNickname(nickname);
   }
 
+  @ApiOperation(
+      value = "게시글 페이징 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 조회 성공") })
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public Page<FeedPagingRes> selectFeeds(
+      @RequestParam(required = false) Mood mood,
+      @RequestParam(defaultValue = "1") Integer page
+  ) {
+    return feedService.selectFeeds(mood, page);
+  }
+
+
+  @ApiOperation(
+      value = "게시글 임시 저장")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 임시 저장 성공") })
+  @PostMapping("/temporary")
+  @ResponseStatus(HttpStatus.OK)
+  public void saveFeedTemporarily(
+      @RequestPart(required = false) MultipartFile image,
+      @RequestPart FeedReq req,
+      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
+  ) throws IOException {
+    feedService.saveFeedTemporarily(image, req, userDetails.getUser());
+  }
+
+  @ApiOperation(
+      value = "게시글 임시 저장 불러오기")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "게시글 임시 저장 불러오기") })
+  @GetMapping("/temporary")
+  @ResponseStatus(HttpStatus.OK)
+  public FeedRes getFeedTemporarily(
+      @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails
+  ) {
+    return feedService.getTemporaryFeed(userDetails.getUser());
+  }
 
 }

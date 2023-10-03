@@ -1,5 +1,6 @@
 package sorok.soroksorok.auth.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Component
+@Api(tags = "Social Auth API - 인증/인가")
 public class SocialController {
 
   @ApiOperation(
