@@ -58,11 +58,11 @@ public class Feed extends BaseEntity {
     this.tags = tags;
   }
 
-  public void editFeed(FeedEditReq req, String imageUrl, String tags) {
+  public void editFeed(FeedEditReq req, String imageUrl) {
     this.title = req.getTitle();
     this.content = req.getContent();
     this.imageUrl = imageUrl;
-    this.tags = tags;
+    this.tags = req.getTags();
   }
 
   public boolean isWroteByUser(User user) {

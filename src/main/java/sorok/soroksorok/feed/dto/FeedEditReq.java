@@ -14,4 +14,7 @@ public class FeedEditReq {
   @ApiModelProperty(value="내용", example = "내용입니다.", required = true)
   private String content;
 
+  @ApiModelProperty(value="태그", example = "1, 2, 3", required = true)
+  private String tags;
+
 }
