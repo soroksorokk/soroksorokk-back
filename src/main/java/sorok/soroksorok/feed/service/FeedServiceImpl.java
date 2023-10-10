@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import sorok.soroksorok.feed.dto.FeedEditReq;
 import sorok.soroksorok.feed.dto.FeedPagingRes;
 import sorok.soroksorok.feed.entity.Mood;
+import sorok.soroksorok.feed.entity.Tags;
 import sorok.soroksorok.feed.entity.TempFeed;
+import sorok.soroksorok.feed.repository.TagsRepository;
 import sorok.soroksorok.feed.repository.TempFeedRepository;
 import sorok.soroksorok.user.entity.User;
 import sorok.soroksorok.feed.dto.FeedReq;
@@ -29,14 +31,23 @@ public class FeedServiceImpl implements FeedService {
 
   private final FeedRepository feedRepository;
   private final TempFeedRepository tempFeedRepository;
+  private final TagsRepository tagsRepository;
   private final S3Upload s3Upload;
 
   @Override
   @Transactional
   public void createFeed(MultipartFile image, FeedReq req, User user) throws IOException {
-    String imageUrl = s3Upload.upload(image);
+    String imageUrl = "";
+    if(image == null) {
+      imageUrl = "none";
+    } else {
+      imageUrl = s3Upload.upload(image);
+    }
     Feed feed = req.toEntity(imageUrl, user);
-    feedRepository.save(feed);
+    List<Tags> tags = req.getTags().stream()
+        .map(x -> Tags.builder().content(x).feed(feed).build()).collect(Collectors.toList());
+    feedRepository.saveAndFlush(feed);
+    tagsRepository.saveAllAndFlush(tags);
   }
 
   @Override
@@ -52,7 +63,15 @@ public class FeedServiceImpl implements FeedService {
     Feed feed = getFeedEntityById(id);
     validateIfUserWroteFeed(feed, user);
     String imageUrl = s3Upload.upload(image);
-    feed.editFeed(req, imageUrl);
+
+    tagsRepository.deleteByFeedAllIgnoreCase(feed);
+
+    List<Tags> tags = req.getTags().stream()
+        .map(x -> Tags.builder().content(x).feed(feed).build()).collect(Collectors.toList());
+
+    tagsRepository.saveAllAndFlush(tags);
+
+    feed.editFeed(req, imageUrl, tags);
   }
 
   @Override

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,11 +44,12 @@ public class Feed extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Mood mood;
 
-  private String tags;
+  @OneToMany(cascade = javax.persistence.CascadeType.ALL, mappedBy = "feed", orphanRemoval = true)
+  private List<Tags> tags;
 
   @Builder
   public Feed(String title, String content, String imageUrl, String artist, String music, User user,
-      Mood mood, String tags) {
+      Mood mood, List<Tags> tags) {
     this.title = title;
     this.content = content;
     this.imageUrl = imageUrl;
@@ -58,11 +60,11 @@ public class Feed extends BaseEntity {
     this.tags = tags;
   }
 
-  public void editFeed(FeedEditReq req, String imageUrl) {
+  public void editFeed(FeedEditReq req, String imageUrl, List<Tags> tags) {
     this.title = req.getTitle();
     this.content = req.getContent();
     this.imageUrl = imageUrl;
-    this.tags = req.getTags();
+    this.tags = tags;
   }
 
   public boolean isWroteByUser(User user) {

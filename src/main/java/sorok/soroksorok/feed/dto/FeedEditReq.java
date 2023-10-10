@@ -2,6 +2,7 @@ package sorok.soroksorok.feed.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 import lombok.Getter;
 
 @Getter
@@ -15,6 +16,6 @@ public class FeedEditReq {
   private String content;
 
   @ApiModelProperty(value="태그", example = "1, 2, 3", required = true)
-  private String tags;
+  private List<String> tags;
 
 }

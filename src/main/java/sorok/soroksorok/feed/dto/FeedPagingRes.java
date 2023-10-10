@@ -3,10 +3,13 @@ package sorok.soroksorok.feed.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.entity.Mood;
+import sorok.soroksorok.feed.entity.Tags;
 
 @ApiModel(value = "피드 조회 응답")
 @Getter
@@ -46,6 +49,9 @@ public class FeedPagingRes {
   @ApiModelProperty(value="글 내용", example = "내용", required = true)
   private String content;
 
+  @ApiModelProperty(value="태그", example = "[1, 2, 3]", required = true)
+  private List<String> tags;
+
   public static FeedPagingRes of(Feed feed) {
     return FeedPagingRes
         .builder()
@@ -59,6 +65,7 @@ public class FeedPagingRes {
         .createdAt(feed.getCreatedAt())
         .imageUrl(feed.getImageUrl())
         .content(feed.getContent())
+        .tags(feed.getTags().stream().map(Tags::getContent).collect(Collectors.toList()))
         .build();
   }
 

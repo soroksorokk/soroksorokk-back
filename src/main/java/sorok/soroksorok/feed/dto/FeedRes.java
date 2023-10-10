@@ -3,10 +3,13 @@ package sorok.soroksorok.feed.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 import sorok.soroksorok.feed.entity.Feed;
 import sorok.soroksorok.feed.entity.Mood;
+import sorok.soroksorok.feed.entity.Tags;
 import sorok.soroksorok.feed.entity.TempFeed;
 
 @ApiModel(value = "피드 조회 응답")
@@ -41,6 +44,9 @@ public class FeedRes {
   @ApiModelProperty(value="게시글 수정 시간", example = "", required = true)
   private LocalDateTime modifiedAt;
 
+  @ApiModelProperty(value="태그", example = "[1, 2, 3]", required = true)
+  private List<String> tags;
+
   public static FeedRes of(Feed feed) {
     return FeedRes
         .builder()
@@ -53,6 +59,7 @@ public class FeedRes {
         .imageUrl(feed.getImageUrl())
         .createdAt(feed.getCreatedAt())
         .modifiedAt(feed.getModifiedAt())
+        .tags(feed.getTags().stream().map(Tags::getContent).collect(Collectors.toList()))
         .build();
   }
 
