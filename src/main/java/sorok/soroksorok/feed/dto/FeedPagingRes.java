@@ -25,6 +25,12 @@ public class FeedPagingRes {
   @ApiModelProperty(value="제목", example = "제목", required = true)
   private String title;
 
+  @ApiModelProperty(value="아티스트", example = "아티스트", required = true)
+  private String artist;
+
+  @ApiModelProperty(value="노래제목", example = "노래제목", required = true)
+  private String music;
+
   @ApiModelProperty(value="분위기", example = "ANGRY", required = true)
   private Mood mood;
 
@@ -37,6 +43,8 @@ public class FeedPagingRes {
         .id(feed.getId())
         .nickname(feed.getUser().getNickname())
         .profileImage(feed.getUser().getImageUrl())
+        .artist(feed.getArtist())
+        .music(feed.getMusic())
         .title(feed.getTitle())
         .mood(feed.getMood())
         .createdAt(feed.getCreatedAt())
