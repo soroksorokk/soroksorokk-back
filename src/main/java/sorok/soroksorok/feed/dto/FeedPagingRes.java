@@ -37,6 +37,15 @@ public class FeedPagingRes {
   @ApiModelProperty(value="작성 시간", example = "", required = true)
   private LocalDateTime createdAt;
 
+  @ApiModelProperty(value="작성 시간", example = "", required = true)
+  private String imageUrl;
+
+  @ApiModelProperty(value="좋아요 갯수", example = "2", required = true)
+  private Integer likeCount;
+
+  @ApiModelProperty(value="글 내용", example = "내용", required = true)
+  private String content;
+
   public static FeedPagingRes of(Feed feed) {
     return FeedPagingRes
         .builder()
@@ -48,6 +57,8 @@ public class FeedPagingRes {
         .title(feed.getTitle())
         .mood(feed.getMood())
         .createdAt(feed.getCreatedAt())
+        .imageUrl(feed.getImageUrl())
+        .content(feed.getContent())
         .build();
   }
 

@@ -15,6 +15,9 @@ import sorok.soroksorok.comment.entity.Comment;
 @ApiModel(value = "댓글 조회 응답")
 public class CommentRes {
 
+  @ApiModelProperty(value="댓글 고유 id", example = "1", required = true)
+  private Long id;
+
   @ApiModelProperty(value="댓글 작성자 닉네임", example = "닉네임", required = true)
   private String nickname;
 
@@ -27,6 +30,7 @@ public class CommentRes {
   public static CommentRes of(Comment comment) {
     return CommentRes
         .builder()
+        .id(comment.getId())
         .content(comment.getContent())
         .nickname(comment.getUser().getNickname())
         .createdAt(comment.getCreatedAt())

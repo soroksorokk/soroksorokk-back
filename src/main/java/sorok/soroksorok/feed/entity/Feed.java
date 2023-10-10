@@ -1,5 +1,7 @@
 package sorok.soroksorok.feed.entity;
 
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -41,9 +43,11 @@ public class Feed extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Mood mood;
 
+  private String tags;
+
   @Builder
   public Feed(String title, String content, String imageUrl, String artist, String music, User user,
-      Mood mood) {
+      Mood mood, String tags) {
     this.title = title;
     this.content = content;
     this.imageUrl = imageUrl;
@@ -51,12 +55,14 @@ public class Feed extends BaseEntity {
     this.music = music;
     this.user = user;
     this.mood = mood;
+    this.tags = tags;
   }
 
-  public void editFeed(FeedEditReq req, String imageUrl) {
+  public void editFeed(FeedEditReq req, String imageUrl, String tags) {
     this.title = req.getTitle();
     this.content = req.getContent();
     this.imageUrl = imageUrl;
+    this.tags = tags;
   }
 
   public boolean isWroteByUser(User user) {

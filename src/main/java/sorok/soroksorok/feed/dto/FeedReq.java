@@ -2,6 +2,7 @@ package sorok.soroksorok.feed.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class FeedReq {
 
   @ApiModelProperty(value="노래 이름", example = "홍시", required = true)
   private String music;
+
+  @ApiModelProperty(value="태그", example = "1, 2, 3", required = true)
+  private String tags;
 
   public Feed toEntity(String imageUrl, User user) {
     return Feed
